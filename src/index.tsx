@@ -1,17 +1,27 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './App';
-import * as serviceWorker from './serviceWorker';
+import { CreateFirebaseContext } from 'firebase-hooks-react';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+const Firebase = CreateFirebaseContext(
+	{
+		apiKey: 'AIzaSyBSRTRgDkPvJvt9Ub-1ttCSaUopOPimv80',
+		authDomain: 'hooksies123.firebaseapp.com',
+		databaseURL: 'https://hooksies123.firebaseio.com',
+		projectId: 'hooksies123',
+		storageBucket: 'hooksies123.appspot.com',
+		messagingSenderId: '705806228715',
+		appId: '1:705806228715:web:02ec668242568d339a72ae',
+		measurementId: 'G-P6TEK34DPZ',
+	},
+	['auth', 'firestore', 'storage', 'database'],
 );
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+ReactDOM.render(
+	<React.StrictMode>
+		<Firebase>
+			<App />
+		</Firebase>
+	</React.StrictMode>,
+	document.getElementById('root'),
+);

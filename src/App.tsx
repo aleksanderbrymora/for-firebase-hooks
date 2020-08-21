@@ -1,26 +1,30 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useR, useFirestore } from 'firebase-hooks-react';
+import { Signout } from './Signout';
+import { Facebook } from './Facebook';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const QueryWithUser: React.FC = () => {
+	const [loading, error, data] = useFirestore('__user');
+
+	return <div>{JSON.stringify(data)}</div>;
+};
+
+const App: React.FC = () => {
+	const { loading, user } = useR();
+	return loading ? (
+		<p>Loading...</p>
+	) : (
+		<div className='App'>
+			{user ? (
+				<>
+					<QueryWithUser />
+					<Signout />
+				</>
+			) : (
+				<Facebook />
+			)}
+		</div>
+	);
+};
 
 export default App;
